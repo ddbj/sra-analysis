@@ -44,6 +44,9 @@ def create_xml(analysis_h, analysis_type, db)
 			# Title
 			analysis_e.TITLE(analysis_h["title"])
 
+			# Description
+			analysis_e.DESCRIPTION(analysis_h["description"])
+		
 			# Study ref
 			refname_h = {}
 			if analysis_h["study_ref_refname"] && !analysis_h["study_ref_refname"].empty?
@@ -143,9 +146,6 @@ def create_xml(analysis_h, analysis_type, db)
 				end
 			end # unless
 			
-			# Description
-			analysis_e.DESCRIPTION(analysis_h["description"])
-		
 			case analysis_type
 			
 			when "base-modification"
@@ -170,7 +170,7 @@ def create_xml(analysis_h, analysis_type, db)
 				
 				}
 
-			when "binned-metagenome"
+			when "binned-metagenome", "primary-metagenome"
 		
 				analysis_e.ANALYSIS_TYPE{|analysis_type|
 					analysis_type.METAGENOME_ASSEMBLY{|metagenome_assembly|
@@ -228,7 +228,7 @@ def create_xml(analysis_h, analysis_type, db)
 			# FILES
 			analysis_e.FILES{|files|
 				for file_h in analysis_h["file"]
-					files.FILE("filename" => file_h["filename"], "filetype" => file_h["filetype"], "checksum_method" => "MD5", "checksum" => file_h["checksum"])
+					files.FILE("filename" => file_h["filename"], "filetype" => file_h["filetype"].sub(/^GFF$/, "gff"), "checksum_method" => "MD5", "checksum" => file_h["checksum"])
 				end
 			} # FILES
 			
