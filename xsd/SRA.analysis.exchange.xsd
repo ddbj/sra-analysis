@@ -212,6 +212,13 @@
             the Analysis browser and in database search results. </xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element maxOccurs="1" minOccurs="1" name="DESCRIPTION" type="xs:string">
+        <xs:annotation>
+          <xs:documentation> Describes the contents of the analysis objects, their relationship with
+            one another, the target objects, and their place in the overall study.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>      
       <xs:element name="STUDY_REF">
         <xs:annotation>
           <xs:documentation>Identifies a parent study.</xs:documentation>
@@ -293,13 +300,6 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-      <xs:element maxOccurs="1" minOccurs="1" name="DESCRIPTION" type="xs:string">
-        <xs:annotation>
-          <xs:documentation> Describes the contents of the analysis objects, their relationship with
-            one another, the target objects, and their place in the overall study.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element maxOccurs="1" minOccurs="1" name="ANALYSIS_TYPE">
         <xs:annotation>
           <xs:documentation> Supported analysis types. </xs:documentation>
@@ -309,7 +309,7 @@
             <xs:element name="METAGENOME_ASSEMBLY">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="NAME" type="xs:string"/>
+                  <xs:element name="NAME" minOccurs="0" type="xs:string"/>
                   <xs:element minOccurs="0" name="TYPE">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
@@ -337,10 +337,10 @@
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="PARTIAL" type="xs:boolean"> </xs:element>
-                  <xs:element name="COVERAGE" type="xs:string"/>
-                  <xs:element name="PROGRAM" type="xs:string"/>
-                  <xs:element name="PLATFORM" type="xs:string"/>
+                  <xs:element name="PARTIAL" minOccurs="0" type="xs:boolean"> </xs:element>
+                  <xs:element name="COVERAGE" minOccurs="0" type="xs:string"/>
+                  <xs:element name="PROGRAM" minOccurs="0" type="xs:string"/>
+                  <xs:element name="PLATFORM" minOccurs="0" type="xs:string"/>
                   <xs:element minOccurs="0" name="MIN_GAP_LENGTH" type="xs:integer"/>
                   <xs:element minOccurs="0" name="MOL_TYPE">
                     <xs:simpleType>
@@ -361,75 +361,12 @@
               <xs:annotation>
                 <xs:documentation> Base modification (e.g. methylation) data. </xs:documentation>
               </xs:annotation>
-              <xs:complexType>
-                <xs:choice>
-                  <xs:element name="STANDARD">
-                    <xs:annotation>
-                      <xs:documentation>A standard genome assembly.</xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:attribute name="refname" type="xs:string" use="optional">
-                        <xs:annotation>
-                          <xs:documentation> A recognized name for the genome assembly.
-                          </xs:documentation>
-                        </xs:annotation>
-                      </xs:attribute>
-                      <xs:attribute name="accession" type="xs:token">
-                        <xs:annotation>
-                          <xs:documentation> Identifies the genome assembly using an accession
-                            number and a sequence version. </xs:documentation>
-                        </xs:annotation>
-                      </xs:attribute>
-                    </xs:complexType>
-                  </xs:element>
-                  <xs:element name="CUSTOM">
-                    <xs:annotation>
-                      <xs:documentation> Other genome assembly. </xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element maxOccurs="1" minOccurs="0" name="DESCRIPTION"
-                          type="xs:string">
-                          <xs:annotation>
-                            <xs:documentation>Description of the genome
-                              assembly.</xs:documentation>
-                          </xs:annotation>
-                        </xs:element>
-                        <xs:element maxOccurs="unbounded" name="URL_LINK">
-                          <xs:annotation>
-                            <xs:documentation>A link to the genome
-                              assembly.</xs:documentation>
-                          </xs:annotation>
-                          <xs:complexType>
-                            <xs:all>
-                              <xs:element maxOccurs="1" minOccurs="0" name="LABEL"
-                                type="xs:string">
-                                <xs:annotation>
-                                  <xs:documentation> Text label to display for the link.
-                                  </xs:documentation>
-                                </xs:annotation>
-                              </xs:element>
-                              <xs:element maxOccurs="1" minOccurs="1" name="URL"
-                                type="xs:anyURI">
-                                <xs:annotation>
-                                  <xs:documentation> The internet service link (file:, http:,
-                                    ftp:, etc). </xs:documentation>
-                                </xs:annotation>
-                              </xs:element>
-                            </xs:all>
-                          </xs:complexType>
-                        </xs:element>
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:choice>
-              </xs:complexType>
             </xs:element>
             <xs:element name="GENOME_MAP">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="PROGRAM" type="xs:string"/>
-                  <xs:element name="PLATFORM">
+                  <xs:element name="PROGRAM" minOccurs="0" type="xs:string"/>
+                  <xs:element name="PLATFORM" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:enumeration value="BioNano"/>
@@ -533,6 +470,14 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
+
+      <xs:element name="PROCESSING" maxOccurs="1" minOccurs="0" type="DefaultProcessingType">
+        <xs:annotation>
+          <xs:documentation> Identify the tools and processing steps used to produce the sequence annotations.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
 
       <xs:element maxOccurs="1" minOccurs="0" name="ANALYSIS_LINKS">
         <xs:annotation>
